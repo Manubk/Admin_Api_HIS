@@ -45,7 +45,7 @@ public class AdminService implements IAdminService {
 	
 	@Autowired
 	private Util util;
-	
+		
 	@Override
 	public List<PlanCategoryDto> createUpdateCat(PlanCategoryDto planCategoryDto) {
 		log.info("createUpdateCat ");
@@ -97,7 +97,7 @@ public class AdminService implements IAdminService {
 		}
 		return categoryDtos;
 	}
-
+	
 	@Override
 	public List<PlanDto> createOrUpdatePlan(PlanDto planDto) {
 		log.info("createOrUpdatePlan planId = "+planDto.getPlanId());
