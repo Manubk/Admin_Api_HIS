@@ -10,8 +10,8 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.his</groupId>
-	<artifactId>Admin_Module</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>Admin_API</artifactId>
+	<version>0.0.1</version>
 	<name>Admin_Module</name>
 	<description>This api is Admin Related function </description>
 	<properties>

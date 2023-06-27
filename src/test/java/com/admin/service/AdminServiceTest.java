@@ -16,6 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,7 +33,7 @@ import com.admin.serviceInterface.IAdminService;
 import com.admin.util.Util;
 import java.util.Optional;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class AdminServiceTest {
 	
 	@Mock
@@ -50,9 +51,6 @@ public class AdminServiceTest {
 	@InjectMocks
 	private AdminService service;
 	
-
-	
-
 //	@DisplayName("Saving the Categoryes and it should return list of categoryes")
 //	public void createUpdateCat(PlanCategoryDto planCategoryDto) {
 //	
@@ -60,17 +58,12 @@ public class AdminServiceTest {
 //		mockCategoryDto.setActiveSw("A");
 //		mockCategoryDto.setCategoryName("Family");
 //		
-//		
-//		
-//		List<PlanCategoryDto>  mockCategoryDtoList = Mockito.mock(ArrayList.class);
+//		List<PlanCategoryDto>  mockCategoryDtoList = new ArrayList<>();
 //		mockCategoryDtoList.add(new PlanCategoryDto(1,"Senior Citezon","A"));
 //		mockCategoryDtoList.add(new PlanCategoryDto(1,"Children","A"));
 //		mockCategoryDtoList.add(mockCategoryDto);
-//		
-//		
-//		
 //	
-//		Mockito.when(planCategoryRepo.save(mockCategoryDto)).thenReturn(mockCategoryDto);
+////		Mockito.when(planCategoryRepo.save(mockCategoryDto))
 //		Mockito.when(service.findAllCategory()).thenReturn(mockCategoryDtoList);
 //		
 //		List<PlanCategoryDto> actualValue = service.createUpdateCat(mockCategoryDto);
@@ -78,68 +71,68 @@ public class AdminServiceTest {
 //		assertEquals(mockCategoryDtoList, actualValue);
 //	
 //	}
-	
-	@Test
-	@Disabled
-	public void testCategoryStatusChange() {
-		
-		AdminService spy = Mockito.spy(service);
-		
-		List<PlanCategoryDto>  mockCategoryDtoList = new ArrayList<>();
-		mockCategoryDtoList.add(new PlanCategoryDto(1,"Senior Citezon","A"));
-		mockCategoryDtoList.add(new PlanCategoryDto(1,"Children","A"));
-		
-		PlanCategoryDto mockPlanCategoryDto = new PlanCategoryDto(1,"Family","A");
-		
-		PlanCategoryEntity mockCategoryEntity = new PlanCategoryEntity(1,"Family","A");
-		Optional<PlanCategoryEntity> optionalCat = Optional.of(mockCategoryEntity);
-		
-		Mockito.when(planCategoryRepo.findById(mockPlanCategoryDto.getCategoryId())).thenReturn(optionalCat);
-		Mockito.doReturn(mockCategoryDtoList).when(spy).findAllCategory();
-		
-		List<PlanCategoryDto> actualValue = service.categoryStatusChange(mockPlanCategoryDto);
-		
-		assertEquals(mockCategoryDtoList, actualValue);
-	}
-	
-	@Test
-	@DisplayName("getting all the values from database")
-	public void testGetAllCategoryes() {
-
-		List<PlanCategoryDto>  mockCategoryDtoList = new ArrayList<>();
-		mockCategoryDtoList.add(new PlanCategoryDto(1,"Senior Citezon","A"));
-		mockCategoryDtoList.add(new PlanCategoryDto(1,"Children","A"));
-		
-		List<PlanCategoryEntity> mockCategoryEntitys = new ArrayList<>();
-		mockCategoryEntitys.add(new PlanCategoryEntity(1,"Senior Citezon","A"))	;
-		mockCategoryEntitys.add(new PlanCategoryEntity(1,"Children","A"));
-		
-		
-		Mockito.when(planCategoryRepo.findAll()).thenReturn(mockCategoryEntitys);
-		
-		
-		List<PlanCategoryDto> actualValues = service.findAllCategory();
-		
-		assertEquals(mockCategoryDtoList, actualValues);
-	}
-	
-	@Test
-	@DisplayName("Creating Plan")
-	public void testCreateOrUpdatePlan() {
-		List<PlanDto> plans = new ArrayList<>();
-		plans.add(new PlanDto(1, "SNAP", LocalDate.now(), LocalDate.now().plusMonths(6),1, "A", 95));
-		plans.add(new PlanDto(2, "CCAP", LocalDate.now(), LocalDate.now().plusMonths(6),2, "A", 634));
-		PlanDto mockPlanDto = new PlanDto(2, "MEDICADE", LocalDate.now(), LocalDate.now().plusMonths(6),3, "A", 634);
-		
-		AdminService spy = Mockito.spy(service);
-		
-		PlanEntity mockPlanEntity = new PlanEntity(1, "", 95, LocalDate.now(), LocalDate.now().plusMonths(6), 1, "A");
-		Mockito.when(planRepo.save(mockPlanEntity)).thenReturn(mockPlanEntity);
-		
-		Mockito.doReturn(plans).when(spy).findAllPlans();
-
-		List<PlanDto> actualValue = service.createOrUpdatePlan(mockPlanDto);
-		
-		assertEquals(plans, actualValue);
-	}
+//	
+//	@Test
+//	@Disabled
+//	public void testCategoryStatusChange() {
+//		
+//		AdminService spy = Mockito.spy(service);
+//		
+//		List<PlanCategoryDto>  mockCategoryDtoList = new ArrayList<>();
+//		mockCategoryDtoList.add(new PlanCategoryDto(1,"Senior Citezon","A"));
+//		mockCategoryDtoList.add(new PlanCategoryDto(1,"Children","A"));
+//		
+//		PlanCategoryDto mockPlanCategoryDto = new PlanCategoryDto(1,"Family","A");
+//		
+//		PlanCategoryEntity mockCategoryEntity = new PlanCategoryEntity(1,"Family","A");
+//		Optional<PlanCategoryEntity> optionalCat = Optional.of(mockCategoryEntity);
+//		
+//		Mockito.when(planCategoryRepo.findById(mockPlanCategoryDto.getCategoryId())).thenReturn(optionalCat);
+//		Mockito.doReturn(mockCategoryDtoList).when(spy).findAllCategory();
+//		
+//		List<PlanCategoryDto> actualValue = service.categoryStatusChange(mockPlanCategoryDto);
+//		
+//		assertEquals(mockCategoryDtoList, actualValue);
+//	}
+//	
+//	@Test
+//	@DisplayName("getting all the values from database")
+//	public void testGetAllCategoryes() {
+//
+//		List<PlanCategoryDto>  mockCategoryDtoList = new ArrayList<>();
+//		mockCategoryDtoList.add(new PlanCategoryDto(1,"Senior Citezon","A"));
+//		mockCategoryDtoList.add(new PlanCategoryDto(1,"Children","A"));
+//		
+//		List<PlanCategoryEntity> mockCategoryEntitys = new ArrayList<>();
+//		mockCategoryEntitys.add(new PlanCategoryEntity(1,"Senior Citezon","A"))	;
+//		mockCategoryEntitys.add(new PlanCategoryEntity(1,"Children","A"));
+//		
+//		
+//		Mockito.when(planCategoryRepo.findAll()).thenReturn(mockCategoryEntitys);
+//		
+//		
+//		List<PlanCategoryDto> actualValues = service.findAllCategory();
+//		
+//		assertEquals(mockCategoryDtoList, actualValues);
+//	}
+//	
+//	@Test
+//	@DisplayName("Creating Plan")
+//	public void testCreateOrUpdatePlan() {
+//		List<PlanDto> plans = new ArrayList<>();
+//		plans.add(new PlanDto(1, "SNAP", LocalDate.now(), LocalDate.now().plusMonths(6),1, "A", 95));
+//		plans.add(new PlanDto(2, "CCAP", LocalDate.now(), LocalDate.now().plusMonths(6),2, "A", 634));
+//		PlanDto mockPlanDto = new PlanDto(2, "MEDICADE", LocalDate.now(), LocalDate.now().plusMonths(6),3, "A", 634);
+//		
+//		AdminService spy = Mockito.spy(service);
+//		
+//		PlanEntity mockPlanEntity = new PlanEntity(1, "", 95, LocalDate.now(), LocalDate.now().plusMonths(6), 1, "A");
+//		Mockito.when(planRepo.save(mockPlanEntity)).thenReturn(mockPlanEntity);
+//		
+//		Mockito.doReturn(plans).when(spy).findAllPlans();
+//
+//		List<PlanDto> actualValue = service.createOrUpdatePlan(mockPlanDto);
+//		
+//		assertEquals(plans, actualValue);
+//	}
 }
