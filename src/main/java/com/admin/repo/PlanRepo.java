@@ -9,5 +9,6 @@ import com.admin.entity.PlanEntity;
 @Repository
 public interface PlanRepo extends JpaRepository<PlanEntity, Integer>{
 
-
+	public PlanEntity findByPlanName(String planName);
+	
 }

@@ -7,8 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +21,7 @@ import com.admin.dto.PlanCategoryDto;
 import com.admin.dto.PlanDto;
 import com.admin.serviceInterface.IAdminService;
 
+@CrossOrigin
 @RestController
 public class PlanController {
 	
@@ -39,7 +42,7 @@ public class PlanController {
 	}
 	
 	@DeleteMapping("/plan/{planId}")
-	public ResponseEntity<List<PlanDto>> deletePlan(Integer planId){
+	public ResponseEntity<List<PlanDto>> deletePlan(@PathVariable Integer planId){
 		log.info("deleteplan planId = "+planId);
 		
 		List<PlanDto> planDtos = adminService.deletePlan(planId);

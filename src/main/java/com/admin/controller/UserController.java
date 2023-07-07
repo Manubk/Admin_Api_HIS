@@ -9,7 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +24,7 @@ import com.admin.serviceInterface.IAdminService;
 
 import io.swagger.v3.oas.annotations.Hidden;
 
+@CrossOrigin
 @RestController
 public class UserController {
 	
@@ -45,7 +49,7 @@ public class UserController {
 	}
 	
 	@PutMapping("/user/sw/{accId}")
-	public ResponseEntity<UserDto> changestatus(Long accId){
+	public ResponseEntity<UserDto> changestatus(@PathVariable Long accId){
 		log.info("changeStatus accId = "+accId);
 		
 		UserDto userDto = adminService.userStatusChange(accId);
@@ -54,7 +58,7 @@ public class UserController {
 	}
 	
 	@PutMapping("/user")
-	public ResponseEntity<String> updateUser(UserDto userDto){
+	public ResponseEntity<String> updateUser(@RequestBody UserDto userDto){
 		log.info("updateUser accId = "+userDto.getAccId());
 		
 		boolean isUpdated = adminService.updateUser(userDto);
@@ -84,5 +88,16 @@ public class UserController {
 		
 		mailSendr.send(mail);
 		return "sent";
+	}
+	
+	@DeleteMapping("/user/{userId}")
+	public ResponseEntity<String> deleteUser(@PathVariable Long userId){
+		log.info("deleteUser userId ="+userId);
+		
+		boolean isDeleted = adminService.deleteUser(userId);
+		
+		return (isDeleted)? new ResponseEntity<String>(AppConstants.SUCCESSFUL,HttpStatus.OK):
+			new ResponseEntity<String>(AppConstants.FAILED,HttpStatus.INTERNAL_SERVER_ERROR);
+		
 	}
 }

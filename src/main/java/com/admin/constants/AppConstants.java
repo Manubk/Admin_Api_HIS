@@ -40,11 +40,16 @@ public class AppConstants {
 	 */
 	
 	
-	public static final String INVALID_SSN_CODE="EX-10";
+	public static final String INVALID_SSN_CODE="EX-1";
 	public static final String INVALID_SSN="Invalid SSN";
+	
+	public static final String DATA_EXISTS="Data Exists";
+	public static final String DATA_EXISTS_CODE="Data Exists";
 	
 	public static final String INVALID_DETAILS_CODE="EX-11";
 	public static final String INVALID_DETAILS="Invalid Details";
+	
+	public static final String EMAIL_PRESENT_CODE:"Ex-10";
 	public static final String EMAIL_PRESENT="Email Already Present";
 	
 }

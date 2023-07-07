@@ -7,5 +7,6 @@ import com.admin.entity.PlanCategoryEntity;
 
 @Repository
 public interface PlanCategoryRepo extends JpaRepository<PlanCategoryEntity, Integer> {
-
+	
+	public PlanCategoryEntity findByCategoryName(String categoryName);
 }

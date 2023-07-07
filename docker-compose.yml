@@ -1,0 +1,95 @@
+
+services:
+ admin:
+  image: malteshbk/adminapi:v1.0
+  container_name: admincont
+  depends_on:
+  - mysqldb
+  ports:
+  - 9000:9000
+  networks:
+  - his/network
+  
+ um:
+  image: malteshbk/umapi:v1.0
+  container_name: umcont
+  depends_on:
+  - mysqldb
+  ports:
+  - 9001:9001
+  networks:
+  - his/network
+  
+ ar:
+  image: malteshbk/arapi:v1.0
+  container_name: arcont
+  depends_on:
+  - mysqldb
+  ports:
+  - 9002:9002
+  networks:
+  - his/network
+  
+ dc:
+  image: malteshbk/dcapi:v1.0
+  container_name: dccont
+  depends_on:
+  - mysqldb
+  ports:
+  - 9003:9003
+  networks:
+  - his/network
+  
+ ed:
+  image: malteshbk/edapi:v1.0
+  container_name: edcont
+  depends_on:
+  - mysqldb
+  ports:
+  - 9004:9004
+  networks:
+  - his/network
+  
+ co:
+  image: malteshbk/coapi:v1.0
+  container_name: cocont
+  depends_on:
+  - mysqldb
+  ports:
+  - 9005:9005
+  networks:
+  - his/network
+  
+ reports:
+  image: malteshbk/reportapi:v1.0
+  container_name: reportcont
+  depends_on:
+  - mysqldb
+  ports:
+  - 9006:9006
+  networks:
+  - his/network
+  
+ bi:
+  image: malteshbk/biapi:latest
+  container_name: bicont
+  ports:
+  - 9007:9007
+  networks:
+  - his/network
+  depends_on:
+  - mysqldb
+  
+ mysqldb:
+  image: mysql
+  container_name: mysqldb
+  networks:
+  - his/network
+  environment:
+   MYSQL_ROOT_PASSWORD: root
+   MYSQL_DATABASE: his
+  
+networks:
+  his/network:
+ 
+  

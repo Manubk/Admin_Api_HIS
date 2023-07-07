@@ -22,4 +22,6 @@ public class UserDto {
 	private LocalDate dob;
 	
 	private String role;
+	
+	private String activeSw;
 }

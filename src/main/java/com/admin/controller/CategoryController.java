@@ -1,12 +1,14 @@
 package com.admin.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.admin.dto.PlanCategoryDto;
 import com.admin.serviceInterface.IAdminService;
 
+@CrossOrigin
 @RestController
 public class CategoryController {
 	
@@ -44,13 +47,13 @@ public class CategoryController {
 		
 	}
 	
-	@GetMapping("/categorys")
-	public ResponseEntity<List<PlanCategoryDto>> findAllCategory(){
+	@GetMapping("/categories")
+	public ResponseEntity<Map<Integer, String>> findAllCategory(){
 		log.info("findAllCategory");
 		
-		List<PlanCategoryDto> categoryDtos = adminServie.findAllCategory();
+		 Map<Integer, String> allCategoryes = adminServie.findAllCategory();
 		
-		return new ResponseEntity<List<PlanCategoryDto>>(categoryDtos,HttpStatus.OK);
+		return new ResponseEntity<Map<Integer,String>>(allCategoryes,HttpStatus.OK);
 	}
 	
 	

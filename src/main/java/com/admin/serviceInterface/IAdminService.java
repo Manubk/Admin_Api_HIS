@@ -1,6 +1,7 @@
 package com.admin.serviceInterface;
 
 import java.util.List;
+import java.util.Map;
 
 import com.admin.dto.MailRequirments;
 import com.admin.dto.PlanCategoryDto;
@@ -10,11 +11,15 @@ import com.admin.entity.UserEntity;
 
 public interface IAdminService {
 	
-	public List<PlanCategoryDto> createUpdateCat(PlanCategoryDto planCategoryDto);
+	public boolean isCateoryPresent(String categoryName);
 	
-	public List<PlanCategoryDto> categoryStatusChange(PlanCategoryDto planCategoryDto);
+	public Map<Integer, String> createUpdateCat(PlanCategoryDto planCategoryDto);
 	
-	public List<PlanCategoryDto> findAllCategory();
+	public Map<Integer,String> categoryStatusChange(PlanCategoryDto planCategoryDto);
+	
+	public Map<Integer, String> findAllCategory();
+	
+	public boolean isPlanPresent(String planName);
 	
 	public List<PlanDto> createOrUpdatePlan(PlanDto plan);
 
@@ -24,11 +29,15 @@ public interface IAdminService {
 
 	public List<PlanDto> findAllPlans();
 
+	public boolean isUserEmailPresent(String Email);
+	
 	public boolean createUser(UserDto user);
 
 	public UserDto userStatusChange(Long accId);
 
 	public boolean updateUser(UserDto user);
+	
+	public boolean deleteUser(Long userId);
 
 	public List<UserDto> findAllUsers();
 	

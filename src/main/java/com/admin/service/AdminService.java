@@ -1,7 +1,9 @@
 package com.admin.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -18,6 +20,7 @@ import com.admin.dto.UserDto;
 import com.admin.entity.PlanCategoryEntity;
 import com.admin.entity.PlanEntity;
 import com.admin.entity.UserEntity;
+import com.admin.exception.DataPresentException;
 import com.admin.exception.InvalidDetails;
 import com.admin.exception.InvalidSsnException;
 import com.admin.repo.PlanCategoryRepo;
@@ -47,8 +50,15 @@ public class AdminService implements IAdminService {
 	private Util util;
 		
 	@Override
-	public List<PlanCategoryDto> createUpdateCat(PlanCategoryDto planCategoryDto) {
+	public Map<Integer, String> createUpdateCat(PlanCategoryDto planCategoryDto) {
 		log.info("createUpdateCat ");
+		
+		if(planCategoryDto.getCategoryId() <= 0 ) {
+			PlanCategoryEntity categoryName = planCategoryRepo.findByCategoryName(planCategoryDto.getCategoryName());
+			if(categoryName != null) {
+				throw new DataPresentException(AppConstants.EMAIL_PRESENT);
+			}
+		}
 		
 		PlanCategoryEntity category = new PlanCategoryEntity();
 		
@@ -64,7 +74,7 @@ public class AdminService implements IAdminService {
 	}
 
 	@Override
-	public List<PlanCategoryDto> categoryStatusChange(PlanCategoryDto planCategoryDto) {
+	public Map<Integer, String> categoryStatusChange(PlanCategoryDto planCategoryDto) {
 		log.info("deactivateCategory categoryId = "+planCategoryDto.getCategoryId());
 		
 		Optional<PlanCategoryEntity> OCategory = planCategoryRepo.findById(planCategoryDto.getCategoryId());
@@ -83,24 +93,27 @@ public class AdminService implements IAdminService {
 	}
 
 	@Override
-	public List<PlanCategoryDto> findAllCategory() {
+	public Map<Integer, String> findAllCategory() {
 		log.info("findAllCetagory");
 		
 		List<PlanCategoryEntity> categorys = planCategoryRepo.findAll();
-		List<PlanCategoryDto> categoryDtos = new ArrayList<>();
+		Map planCategoryMap = new  HashMap<Integer, String>();
 		
 		for(PlanCategoryEntity category : categorys) {
-			PlanCategoryDto categoryDto = new PlanCategoryDto();
-			BeanUtils.copyProperties(category, categoryDto);
+			planCategoryMap.put(category.getCategoryId(), category.getCategoryName());
 			
-			categoryDtos.add(categoryDto);
 		}
-		return categoryDtos;
+		return planCategoryMap;
 	}
 	
 	@Override
 	public List<PlanDto> createOrUpdatePlan(PlanDto planDto) {
 		log.info("createOrUpdatePlan planId = "+planDto.getPlanId());
+		
+		PlanEntity planEntity = planRepo.findByPlanName(planDto.getPlanName());
+		
+		if(planEntity != null)
+			throw new DataPresentException("This Plan Already Present");
 		
 		PlanEntity plan = new PlanEntity();
 		
@@ -274,6 +287,52 @@ public class AdminService implements IAdminService {
 			throw new  InvalidSsnException(AppConstants.INVALID_SSN);
 		}
 		return true;
+	}
+
+	@Override
+	public boolean isCateoryPresent(String categoryName) {
+		log.info("isCategotyPresent name = "+categoryName);
+		PlanCategoryEntity category = planCategoryRepo.findByCategoryName(categoryName);
+		
+		if(category == null )
+			return false;
+		
+		return true;
+	}
+
+	@Override
+	public boolean isPlanPresent(String planName) {
+		log.info("isPlanPresent");
+		PlanEntity plan = planRepo.findByPlanName(planName);
+		
+		if(plan == null)
+			return false;
+		
+		return true;
+	}
+
+	@Override
+	public boolean isUserEmailPresent(String email) {
+		log.info("isUserEmailPresent");
+		
+		UserEntity user = userRepo.findByEmail(email);
+		
+		if(user != null)
+			return true;
+		
+		return false;
+	}
+
+	@Override
+	public boolean deleteUser(Long UserId) {
+		log.info("deleteUser userId = "+UserId);
+		try {
+			userRepo.deleteById(UserId);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 
