@@ -1,7 +1,7 @@
 
 services:
  admin:
-  image: malteshbk/adminapi:v1.0
+  image: malteshbk/adminapi:latest
   container_name: admincont
   depends_on:
   - mysqldb
@@ -11,7 +11,7 @@ services:
   - his/network
   
  um:
-  image: malteshbk/umapi:v1.0
+  image: malteshbk/umapi:latest
   container_name: umcont
   depends_on:
   - mysqldb
@@ -31,7 +31,7 @@ services:
   - his/network
   
  dc:
-  image: malteshbk/dcapi:v1.0
+  image: malteshbk/dcapi:latest
   container_name: dccont
   depends_on:
   - mysqldb
@@ -41,7 +41,7 @@ services:
   - his/network
   
  ed:
-  image: malteshbk/edapi:v1.0
+  image: malteshbk/edapi:latest
   container_name: edcont
   depends_on:
   - mysqldb
@@ -61,7 +61,7 @@ services:
   - his/network
   
  reports:
-  image: malteshbk/reportapi:v1.0
+  image: malteshbk/reportapi:latest
   container_name: reportcont
   depends_on:
   - mysqldb
@@ -70,15 +70,15 @@ services:
   networks:
   - his/network
   
- bi:
-  image: malteshbk/biapi:latest
-  container_name: bicont
-  ports:
-  - 9007:9007
-  networks:
-  - his/network
-  depends_on:
-  - mysqldb
+# bi:
+#  image: malteshbk/biapi:latest
+#  container_name: bicont
+#  ports:
+#  - 9007:9007
+#  networks:
+#  - his/network
+#  depends_on:
+#  - mysqldb
   
  mysqldb:
   image: mysql
