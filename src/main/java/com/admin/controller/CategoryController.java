@@ -28,22 +28,22 @@ public class CategoryController {
 	private IAdminService adminServie;
 	
 	@PostMapping("/category")
-	public ResponseEntity<List<PlanCategoryDto>> createCategory(@RequestBody PlanCategoryDto categoryDto){
+	public ResponseEntity<Map<Integer, String>> createCategory(@RequestBody PlanCategoryDto categoryDto){
 		log.info("createCategory cat = "+categoryDto.getCategoryName());
 		
-		List<PlanCategoryDto> categoryDtos = adminServie.createUpdateCat(categoryDto);
+		Map<Integer, String> allCategories = adminServie.createUpdateCat(categoryDto);
 		
-		return new ResponseEntity<List<PlanCategoryDto>>(categoryDtos,HttpStatus.OK);
+		return new ResponseEntity<Map<Integer, String>>(allCategories,HttpStatus.OK);
 		
 	}
 	
 	@PostMapping("/category/sw")
-	public ResponseEntity<List<PlanCategoryDto>> changeStatusOfCategory(@RequestBody PlanCategoryDto categoryDto){
+	public ResponseEntity<Map<Integer,String>> changeStatusOfCategory(@RequestBody PlanCategoryDto categoryDto){
 		log.info("changeStatusOfCategory cat ="+categoryDto.getCategoryName()+" SW = "+categoryDto.getActiveSw());
 		
-		List<PlanCategoryDto> categoryDtos = adminServie.categoryStatusChange(categoryDto);
+		Map<Integer, String> allCategoryes = adminServie.categoryStatusChange(categoryDto);
 		
-		return new ResponseEntity<List<PlanCategoryDto>>(categoryDtos,HttpStatus.OK);
+		return new ResponseEntity<Map<Integer ,String>>(allCategoryes,HttpStatus.OK);
 		
 	}
 	

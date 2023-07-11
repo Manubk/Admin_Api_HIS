@@ -110,20 +110,25 @@ public class AdminService implements IAdminService {
 	public List<PlanDto> createOrUpdatePlan(PlanDto planDto) {
 		log.info("createOrUpdatePlan planId = "+planDto.getPlanId());
 		
-		PlanEntity planEntity = planRepo.findByPlanName(planDto.getPlanName());
+		PlanEntity planEntity = null;
+		
+		if(planDto.getPlanId() == null) {
+			planEntity = planRepo.findByPlanName(planDto.getPlanName());
 		
 		if(planEntity != null)
 			throw new DataPresentException("This Plan Already Present");
+		}
 		
-		PlanEntity plan = new PlanEntity();
 		
-		BeanUtils.copyProperties(planDto, plan);
-		plan.setActiveSw(AppConstants.ACTIVATE);
+		planEntity = new PlanEntity();
+		
+		BeanUtils.copyProperties(planDto, planEntity);
+		planEntity.setActiveSw(AppConstants.ACTIVATE);
 		
 		log.info(planDto.toString());
-		log.info(plan.toString());
+		log.info(planEntity.toString());
 		
-		PlanEntity save = planRepo.save(plan);
+		PlanEntity save = planRepo.save(planEntity);
 		
 		return findAllPlans();
 		

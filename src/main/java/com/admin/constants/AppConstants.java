@@ -49,7 +49,7 @@ public class AppConstants {
 	public static final String INVALID_DETAILS_CODE="EX-11";
 	public static final String INVALID_DETAILS="Invalid Details";
 	
-	public static final String EMAIL_PRESENT_CODE:"Ex-10";
+	public static final String EMAIL_PRESENT_CODE="Ex-10";
 	public static final String EMAIL_PRESENT="Email Already Present";
 	
 }
